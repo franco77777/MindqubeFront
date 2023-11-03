@@ -1,0 +1,60 @@
+.sidebar__icon--animation-hover:hover{
+    animation-duration: 0.3s;
+      animation-name: zoom-side-bar;
+      animation-fill-mode: forwards;
+  }
+
+  .sidebar__move--left{
+  animation-duration: 0.3s;
+  animation-name: move-side-bar-left;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+ 
+ 
+}
+  
+
+.sidebar__move--right{
+ animation-duration: 0.3s;
+animation-name: move-side-bar-right;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  
+  transform: translateX(-6rem);
+}
+
+
+.sidebar__icon--border-bottom{
+  border-bottom: 1px solid;
+  border-color: gray;
+}
+
+
+  @keyframes move-side-bar-left {
+    0% {
+      transform: translateX(0);
+      
+    }
+    100% {
+      transform: translateX(-6rem);
+      
+    }
+    
+   
+  }
+  @keyframes move-side-bar-right {
+    0% {
+      transform: translateX(-6rem);
+    }
+    100% {
+      transform: translateX(0);
+      
+    }
+   
+  }
+
+  @keyframes zoom-side-bar {
+   to {
+      transform: scale(1.1);
+    }
+  }

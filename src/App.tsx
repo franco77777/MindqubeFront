@@ -20,6 +20,7 @@ import { auth } from "./utils/firebaseConfig";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import { lazy, Suspense } from "preact/compat";
 import {} from "react";
+import Sidebar from "./components/sidebar/SideBar";
 
 export function App() {
   const googleAccount = useAppSelector((state) => state.user.googleAccount);
@@ -46,16 +47,20 @@ export function App() {
   return (
     <>
       <NavBar />
-      <main className={" px-12"}>
-        <Suspense fallback={<h1>Loading...</h1>}>
-          <Routes>
-            <Route path="/" element={<PageTest />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/test2" element={<PageTest2 />} />
-              <Route path="/test3" element={<PageTest3 />} />
-            </Route>
-          </Routes>
-        </Suspense>
+
+      <main className={"flex items-baseline pr-6 mt-20"}>
+        <Sidebar />
+        <div className={"pl-6"}>
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Routes>
+              <Route path="/" element={<PageTest />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/test2" element={<PageTest2 />} />
+                <Route path="/test3" element={<PageTest3 />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </div>
       </main>
     </>
   );

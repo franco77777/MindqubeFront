@@ -2,6 +2,7 @@ import { useSignal } from "@preact/signals";
 import Log from "./Log";
 import { useEffectOnce } from "react-use";
 import "./index.css";
+import SidebarButton from "./SidebarButton";
 
 const NavBar = () => {
   const active = useSignal<boolean>(true);
@@ -35,6 +36,7 @@ const NavBar = () => {
     <>
       <nav className="fixed top-0 w-full h-20 overflow-hidden bg-white ">
         <div className="w-full h-full flex flex-row justify-between items-center px-12">
+          <SidebarButton />
           <div className={` text-red-700  `}>soy el navbar</div>
           <Log />
         </div>

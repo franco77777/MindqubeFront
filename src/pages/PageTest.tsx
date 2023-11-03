@@ -8,6 +8,7 @@ import {
 import { auth } from "../utils/firebaseConfig";
 import { useEffect, useState } from "react";
 import { logOut, sigIn } from "../utils/firebaseConfig";
+import Sidebar from "../components/sidebar/SideBar";
 
 const PageTest = () => {
   const [user, setUser] = useState({});
@@ -36,7 +37,7 @@ const PageTest = () => {
 
   return (
     <>
-      <div className="mt-20">
+      <div className="">
         <h2>PAGINA 1</h2>
         <Link to={"/test2"}>
           <button className="bg-red-500">Page 222222</button>

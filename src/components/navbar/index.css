@@ -2,6 +2,28 @@
     animation-duration: 0.3s;
       animation-name: zoom;
   }
+
+  .zoom-hover-animation:hover{
+    animation-duration: 0.3s;
+      animation-name: zoom;
+  }
+  
+
+  .active span:nth-child(1) {
+    width: 2rem;
+    background-color: #6836cc;
+    transform: translateY(8px) translateX(-4px) rotate(450deg);
+  }
+  .active span:nth-child(2) {
+    background-color: #6836cc;
+    left: 9rem;
+  }
+  
+  .active span:nth-child(3) {
+    width: 2rem;
+    background-color: #6836cc;
+    transform: translateY(-12px) translateX(-4px) rotate(360deg);
+  }
   
   @keyframes zoom {
     0%,

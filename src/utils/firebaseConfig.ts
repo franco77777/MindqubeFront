@@ -22,8 +22,8 @@ export const sigIn = async ()=>{
   
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    console.log("soy token",token);
+    //const token = credential.accessToken;
+    //console.log("soy token",token);
     // The signed-in user info.
     //const user = result.user;
     //console.log("soy user token",user);

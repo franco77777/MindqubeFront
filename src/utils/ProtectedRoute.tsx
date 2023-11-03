@@ -16,9 +16,9 @@ export const ProtectedRoute = ({
 }: props) => {
   const currentUser = useAppSelector((state) => state.user);
   //const [token,setToken] = useLocalStorage("token")
-  if (!currentUser.googleAccount?.emailVerified) {
-    return <Navigate to={redirectTo} replace />;
-  }
+  // if (!currentUser.googleAccount?.emailVerified) {
+  //   return <Navigate to={redirectTo} replace />;
+  // }
 
   return <>{children ? children : <Outlet />}</>; //las rutas
 };

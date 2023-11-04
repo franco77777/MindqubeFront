@@ -12,7 +12,7 @@ const PageTest3 = lazy(() => import("./pages/PageTest3"));
 // import PageTest from "./pages/PageTest.js";
 // import PageTest3 from "./pages/PageTest3.js";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
-import { useEffectOnce } from "react-use";
+import { useEffectOnce, useLocalStorage } from "react-use";
 import { onAuthStateChanged } from "firebase/auth";
 import { GoogleData } from "./types/userType";
 import { setGoogleAccount } from "./redux/slices/currentUserSlice";
@@ -21,10 +21,12 @@ import { ProtectedRoute } from "./utils/ProtectedRoute";
 import { lazy, Suspense } from "preact/compat";
 import {} from "react";
 import Sidebar from "./components/sidebar/SideBar";
+import axios, { Axios } from "axios";
 
 export function App() {
   const googleAccount = useAppSelector((state) => state.user.googleAccount);
   const dispatch = useAppDispatch();
+  const [token, setToken, removeToken] = useLocalStorage("token");
   console.log("render app", googleAccount);
 
   useEffectOnce(() => {
@@ -44,6 +46,21 @@ export function App() {
     });
   });
 
+  useEffectOnce(() => {
+    const verifyToken = async () => {
+      console.log("soy token", token);
+      try {
+        if (token) {
+          const response = await axios(
+            `http://localhost:8080/user/auth-token`,
+            { params: { token: token } }
+          );
+          console.log(response.data);
+        }
+        verifyToken();
+      } catch (error) {}
+    };
+  });
   return (
     <>
       <NavBar />

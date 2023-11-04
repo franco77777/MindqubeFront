@@ -1,7 +1,7 @@
 import { useSignal } from "@preact/signals";
-import LogIn from "./SignIn";
+import SignIn from "./SignIn";
 import { useEffectOnce } from "react-use";
-import "./sidebar.css";
+import "./navBar.css";
 import SidebarButton from "./SidebarButton";
 import { useAppSelector } from "../../utils/hooks";
 import Logged from "./Logged";
@@ -41,7 +41,7 @@ const NavBar = () => {
         <div className="w-full h-full flex flex-row justify-between items-center px-12">
           <SidebarButton />
           <div className={` text-red-700  `}>soy el navbar</div>
-          {userGoogle ? <Logged /> : <LogIn />}
+          {userGoogle ? <Logged /> : <SignIn />}
         </div>
         <div
           className={`w-full h-20 bg-black absolute z-[-10] transition-all duration-300 ${

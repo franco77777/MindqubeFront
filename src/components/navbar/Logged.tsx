@@ -4,11 +4,12 @@ import { logOut } from "../../utils/firebaseConfig";
 
 const Logged = () => {
   const userLogged = useAppSelector((state) => state.user.googleAccount);
+
   return (
     <>
       <div className=" group hover:cursor-pointer relative">
         <img
-          src={profile}
+          src={userLogged?.photoURL ? userLogged.photoURL : profile}
           alt=""
           className="rounded-full w-14 h-14 bg-blue-500 "
         />

@@ -1,7 +1,7 @@
 import { useSignal } from "@preact/signals";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { setSideBar } from "../../redux/slices/utils";
-import "./sidebar.css";
+import "./navBar.css";
 
 const SidebarButton = () => {
   const sideBarIsEnabled = useAppSelector(

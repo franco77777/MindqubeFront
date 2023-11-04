@@ -1,0 +1,62 @@
+.zoomAnimation {
+    animation-duration: 0.3s;
+      animation-name: zoom;
+  }
+
+  .zoom-hover-animation:hover{
+    animation-duration: 0.3s;
+      animation-name: zoom;
+  }
+  @keyframes zoom {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.07);
+    }
+  }
+
+  .active span:nth-child(1) {
+    width: 2rem;
+    background-color: #6836cc;
+    transform: translateY(8px) translateX(-4px) rotate(450deg);
+  }
+  .active span:nth-child(2) {
+    background-color: #6836cc;
+    left: 9rem;
+  }
+  
+  .active span:nth-child(3) {
+    width: 2rem;
+    background-color: #6836cc;
+    transform: translateY(-12px) translateX(-4px) rotate(360deg);
+  }
+  
+ 
+  .navBar__alert--border-left{
+    border-left: 9px solid;
+    
+  }
+
+  
+  
+  .navBar__alert--animation{
+    animation-timing-function: ease-in-out;
+    animation: alert-to-left 3s ease-in-out  forwards,
+    alert-up 3s ease-in-out forwards 3s ;
+  }
+
+  @keyframes alert-to-left {
+    to{
+      transform: translateX(calc(50vw - 13rem));
+      }
+    }
+
+    @keyframes alert-up {
+     
+       to{
+        
+        transform: translate(calc(50vw - 13rem),-15rem);
+       } 
+      }

@@ -35,8 +35,9 @@ animation-name: move-side-bar-right;
       transform: translateX(0);
       
     }
+    
     100% {
-      transform: translateX(-6rem);
+      transform: translateX(-6.5rem);
       
     }
     
@@ -44,9 +45,15 @@ animation-name: move-side-bar-right;
   }
   @keyframes move-side-bar-right {
     0% {
+    
       transform: translateX(-6rem);
     }
+    80%{
+      transform: translateX(0.5rem);
+    }
+    
     100% {
+     
       transform: translateX(0);
       
     }

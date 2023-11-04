@@ -2,17 +2,16 @@ import { useLocation } from "react-use";
 import { useAppSelector } from "../../utils/hooks";
 import { Link } from "react-router-dom";
 import "./sidebar.css";
-import { useSignal } from "@preact/signals";
-import { useEffect, useState } from "preact/hooks";
+import { LucideIcon } from "../../types/navBarType";
 
-export default function SidebarItem({ icon, text, active, url, delay }) {
+export default function SidebarItem({ icon, text, url, delay }: LucideIcon) {
   const expanded = useAppSelector((state) => state.utils.sideBarIsEnabled);
   const currentUrl = useLocation();
 
   return (
     <li
       style={{ animationDelay: `${delay}ms` }}
-      className={` w-24 sidebar__icon--border-bottom  bg-red-600 ${
+      className={` w-24 sidebar__icon--border-bottom  bg-red-600 rounded ${
         expanded ? " sidebar__move--right" : " sidebar__move--left"
       } `}
     >

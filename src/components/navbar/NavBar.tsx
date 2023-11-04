@@ -1,11 +1,14 @@
 import { useSignal } from "@preact/signals";
-import Log from "./Log";
+import LogIn from "./SignIn";
 import { useEffectOnce } from "react-use";
-import "./index.css";
+import "./sidebar.css";
 import SidebarButton from "./SidebarButton";
+import { useAppSelector } from "../../utils/hooks";
+import Logged from "./Logged";
 
 const NavBar = () => {
-  const active = useSignal<boolean>(true);
+  const userGoogle = useAppSelector((state) => state.user.googleAccount);
+  const active = useSignal<boolean>(false);
   const changeBackground = () => {
     if (window.scrollY < 90) {
       active.value = false;
@@ -34,14 +37,14 @@ const NavBar = () => {
   console.log("render NavBar");
   return (
     <>
-      <nav className="fixed top-0 w-full h-20 overflow-hidden bg-white ">
+      <nav className="fixed top-0 w-full h-20  bg-white ">
         <div className="w-full h-full flex flex-row justify-between items-center px-12">
           <SidebarButton />
           <div className={` text-red-700  `}>soy el navbar</div>
-          <Log />
+          {userGoogle ? <Logged /> : <LogIn />}
         </div>
         <div
-          className={`w-full h-20 bg-black absolute z-[-10] transition-all duration-500 ${
+          className={`w-full h-20 bg-black absolute z-[-10] transition-all duration-300 ${
             active.value ? "top-0" : "top-[-5rem]"
           } `}
         ></div>

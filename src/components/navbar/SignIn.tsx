@@ -1,6 +1,6 @@
 import { useEffectOnce } from "react-use";
 import { useAppSelector } from "../../utils/hooks";
-import { logOut, sigIn } from "../../utils/firebaseConfig";
+import { sigIn } from "../../utils/firebaseConfig";
 import { X } from "lucide-react";
 import { useSignal } from "@preact/signals";
 
@@ -18,15 +18,6 @@ const Log = () => {
     return () => document.removeEventListener("keydown", handleEscapeKey);
   });
 
-  if (currentUser?.emailVerified) {
-    return (
-      <>
-        <button className="text-red-500" onClick={logOut}>
-          Log Out
-        </button>
-      </>
-    );
-  }
   return (
     <>
       <button

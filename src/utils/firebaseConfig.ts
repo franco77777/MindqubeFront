@@ -33,9 +33,9 @@ export const sigIn = async ()=>{
 
 }
   export const logOut = async() => {
-    console.log("me deslogie");
+    
     await signOut(auth)
-  console.log("me deslogie2");
+  console.log("me deslogie");
   }
 
   

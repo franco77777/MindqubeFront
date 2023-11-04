@@ -1,7 +1,7 @@
 import { render } from "preact";
 
 import "./style.css";
-import NavBar from "./components/navbar";
+import NavBar from "./components/navbar/NavBar";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

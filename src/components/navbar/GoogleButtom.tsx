@@ -1,19 +1,13 @@
-import { useEffectOnce, useLocalStorage } from "react-use";
-import { auth, googleLogin } from "../../utils/firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
-import { GoogleData, UserDatabaseResponse } from "../../types/userType";
-import { setGoogleAccount, setUser } from "../../redux/slices/currentUserSlice";
+import { googleLogin } from "../../utils/firebaseConfig";
+import { UserDatabaseResponse } from "../../types/userType";
+import { setUser } from "../../redux/slices/currentUserSlice";
 import { useAppDispatch } from "../../utils/hooks";
 import axios from "axios";
-import { useSignal } from "@preact/signals";
-import { AlertType } from "../../types/othersType";
 
 import { setAlert } from "../../redux/slices/utils";
 
 const GoogleButton = () => {
-  const alert = useSignal<AlertType | null>(null);
   const dispatch = useAppDispatch();
-  const [token, setToken, removeToken] = useLocalStorage("token");
 
   const SigInGoogle = async () => {
     event?.preventDefault();
@@ -31,7 +25,7 @@ const GoogleButton = () => {
           dispatch(
             setAlert({ message: `Welcome ${result.email}`, type: "Success" })
           );
-          setToken(result.token); //
+          localStorage.setItem("token", result.token);
           dispatch(setUser(result));
         }
       } catch (error) {

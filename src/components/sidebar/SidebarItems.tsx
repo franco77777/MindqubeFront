@@ -1,6 +1,5 @@
-import { useLocation } from "react-use";
 import { useAppSelector } from "../../utils/hooks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import { LucideIcon } from "../../types/navBarType";
 

@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import profile from "../../assets/profile.png";
 import { googleLogout } from "../../utils/firebaseConfig";
-import { useLocalStorage } from "react-use";
 import { setUser } from "../../redux/slices/currentUserSlice";
 import { setAlert } from "../../redux/slices/utils";
 
@@ -9,7 +8,6 @@ const Logged = () => {
   const userLogged = useAppSelector((state) => state.user.googleAccount);
   const alertObserver = useAppSelector((state) => state.utils.alertHandler);
   const dispatch = useAppDispatch();
-  const [token, setToken, removeToken] = useLocalStorage("token");
 
   const test = () => {
     if (alertObserver) {
@@ -20,7 +18,7 @@ const Logged = () => {
     console.log("soy alertobervable", alertObserver);
   };
   const removeUserLogged = () => {
-    removeToken();
+    localStorage.removeItem("token");
     googleLogout();
     dispatch(setUser(null));
   };

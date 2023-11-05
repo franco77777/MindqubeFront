@@ -1,7 +1,6 @@
 import { createSlice,PayloadAction} from "@reduxjs/toolkit";
 import { getUser } from "../tasks/userTask";
-//import { User } from "../../utils/interfaces";
-import {GoogleData, User, UserDatabaseResponse} from "../../types/userType"
+import {GoogleData, UserDatabaseResponse} from "../../types/userType"
 
 
 interface initState {

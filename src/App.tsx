@@ -11,23 +11,14 @@ const PageTest3 = lazy(() => import("./pages/PageTest3"));
 // import PageTest2 from "./pages/PageTest2.js";
 // import PageTest from "./pages/PageTest.js";
 // import PageTest3 from "./pages/PageTest3.js";
-import { useAppDispatch, useAppSelector } from "./utils/hooks";
-import { useEffectOnce, useLocalStorage } from "react-use";
-import { onAuthStateChanged } from "firebase/auth";
-import { GoogleData } from "./types/userType";
-import { setGoogleAccount } from "./redux/slices/currentUserSlice";
-import { auth } from "./utils/firebaseConfig";
+import { useAppSelector } from "./utils/hooks";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 import { lazy, Suspense } from "preact/compat";
-import {} from "react";
 import Sidebar from "./components/sidebar/SideBar";
-import axios from "axios";
 import Alert from "./components/others/Alert";
 
 export function App() {
   const googleAccount = useAppSelector((state) => state.user.googleAccount);
-  const dispatch = useAppDispatch();
-  const [token, setToken, removeToken] = useLocalStorage("token");
   console.log("render app", googleAccount);
 
   // useEffectOnce(() => {

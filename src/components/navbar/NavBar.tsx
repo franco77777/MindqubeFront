@@ -1,11 +1,11 @@
 import { useSignal } from "@preact/signals";
 import SignUp from "./SignUp";
-import { useEffectOnce } from "react-use";
 import "./navBar.css";
 import SidebarButton from "./SidebarButton";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import Logged from "./Logged";
 import { setAlert } from "../../redux/slices/utils";
+import { useEffect } from "preact/hooks";
 
 const NavBar = () => {
   const userLoggedGoogle = useAppSelector((state) => state.user.googleAccount);
@@ -20,9 +20,9 @@ const NavBar = () => {
       active.value = true;
     }
   };
-  useEffectOnce(() => {
+  useEffect(() => {
     window.addEventListener("scroll", changeBackground);
-  });
+  }, []);
 
   // const element = useRef();
   // useEffect(() => {
@@ -47,7 +47,7 @@ const NavBar = () => {
   console.log("render NavBar");
   return (
     <>
-      <nav className="fixed top-0 w-full h-20  bg-white ">
+      <nav className="fixed top-0 w-full h-20  bg-white z-10">
         <div className="w-full h-full flex flex-row justify-between items-center px-12">
           <SidebarButton />
           <div className={` text-red-700  `} onClick={test}>

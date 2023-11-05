@@ -1,15 +1,6 @@
 import { useSignal } from "@preact/signals";
-import {
-  AlertCircle,
-  AlertTriangle,
-  CheckCheck,
-  Info,
-  XCircle,
-} from "lucide-react";
-
-import { AlertType } from "../../types/othersType";
+import { AlertTriangle, CheckCheck, Info, XCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { useEffectOnce } from "react-use";
 import { setAlert } from "../../redux/slices/utils";
 import { useEffect } from "preact/hooks";
 import "./others.css";

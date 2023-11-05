@@ -1,10 +1,4 @@
-import {
-  BarChart3,
-  FolderTree,
-  ListChecks,
-  UserCheck,
-  Users,
-} from "lucide-react";
+import { BarChart3, UserCheck } from "lucide-react";
 import SidebarItem from "./SidebarItems";
 import { useAppSelector } from "../../utils/hooks";
 import { useEffect } from "preact/hooks";

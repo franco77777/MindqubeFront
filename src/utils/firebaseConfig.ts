@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {GoogleAuthProvider, getAuth ,signInWithRedirect, signOut} from "firebase/auth";//signInWithPopup
+import {GoogleAuthProvider, getAuth ,signInWithRedirect,signInWithPopup, signOut} from "firebase/auth";//signInWithPopup
+import { GoogleData } from "../types/userType";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD-neJuXncqg1eKXfk9EnANxKPL52GB0D8",
@@ -17,25 +18,27 @@ export const auth = getAuth(app)
 
 const provider = new GoogleAuthProvider();
 //const auth = getAuth(app);
-export const sigIn = async ()=>{
-  const result = await signInWithRedirect(auth, provider)
+export const googleLogin = async ()=>{
+  const result = await signInWithPopup(auth, provider)
   
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    //const token = credential.accessToken;
+    const token = credential?.accessToken;
     //console.log("soy token",token);
-    // The signed-in user info.
-    //const user = result.user;
+    //The signed-in user info.
+    const user = result.user;
     //console.log("soy user token",user);
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  
+   const googleResponse:GoogleData = {
+   email: user.email,
+    emailVerified: user.emailVerified,
+    photoURL: user.photoURL}
+  return googleResponse;
 
 }
-  export const logOut = async() => {
+  export const googleLogout = async() => {
     
     await signOut(auth)
-  console.log("me deslogie");
+  
   }
 
   

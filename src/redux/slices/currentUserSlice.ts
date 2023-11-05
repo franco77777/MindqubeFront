@@ -5,7 +5,7 @@ import {GoogleData, User, UserDatabaseResponse} from "../../types/userType"
 
 
 interface initState {
-	user: UserDatabaseResponse,
+	user: UserDatabaseResponse|null,
 	googleAccount:GoogleData|null,
 	isLoading:boolean
 
@@ -13,12 +13,7 @@ interface initState {
 }
 
 const initialState:initState = {
-	user: {
-        id: 0,
-        email:"",
-        role:{id:0,role:""},                  
-        token:""
-    },
+	user:null,
 	googleAccount:null,
 	
 	isLoading:false
@@ -34,7 +29,7 @@ const userSlice = createSlice({
 		setGoogleAccount: (state, action: PayloadAction<GoogleData|null>) =>{
 			state.googleAccount = action.payload
 		},
-		setUser:(state,action:PayloadAction<UserDatabaseResponse>) =>{
+		setUser:(state,action:PayloadAction<UserDatabaseResponse|null>) =>{
 			state.user = action.payload
 		},
 	},

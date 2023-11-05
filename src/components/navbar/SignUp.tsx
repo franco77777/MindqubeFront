@@ -5,11 +5,12 @@ import { X } from "lucide-react";
 import { useSignal } from "@preact/signals";
 import React from "react";
 import GoogleButton from "./GoogleButtom";
-import AlertOfNavBar from "./AlertOfNavBar";
+
 import axios from "axios";
-import { Alert } from "../../types/othersType";
+import { AlertType } from "../../types/othersType";
 import { UserDatabaseResponse } from "../../types/userType";
 import { setUser } from "../../redux/slices/currentUserSlice";
+import { setAlert } from "../../redux/slices/utils";
 
 type Props = {
   email: string;
@@ -20,13 +21,13 @@ const Log = () => {
   const currentUser = useAppSelector((state) => state.user.googleAccount);
   const showLog = useSignal<boolean>(false);
   const userData = useSignal<Props>({ email: "", password: "" });
-  const alert = useSignal<Alert | null>(null);
   const dispatch = useAppDispatch();
   const regular = new RegExp(
     "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"
   );
   const [token, setToken, removeToken] = useLocalStorage("token");
   const disableButtomSubmit = useSignal<boolean>(true);
+
   const handleUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     userData.value = {
       ...userData.value,
@@ -42,29 +43,33 @@ const Log = () => {
   };
 
   const registerData = async () => {
+    event?.preventDefault();
     try {
       const result: UserDatabaseResponse = (
         await axios.post("http://localhost:8080/user/sign-in", userData.value)
       ).data;
+      console.log("soy result de todo", result);
+
       if (result) {
-        setToken(result.token);
+        setToken(result.token); //
         dispatch(setUser(result));
+        dispatch(
+          setAlert({ message: `Welcome ${result.email}`, type: "Success" })
+        );
         showLog.value = !showLog.value;
-        alert.value = { message: `Welcome ${result.email}`, type: "Success" };
       }
-      setTimeout(() => {
-        alert.value = null;
-      }, 3500);
       console.log(result);
     } catch (error) {
+      //logOut()
       if (axios.isAxiosError(error)) {
-        alert.value = {
-          message: error.response ? error.response.data.message : error.message,
-          type: "Error",
-        };
-        setTimeout(() => {
-          alert.value = null;
-        }, 3500);
+        dispatch(
+          setAlert({
+            message: error.response
+              ? error.response.data.message
+              : error.message,
+            type: "Error",
+          })
+        );
         throw error;
       } else {
         throw new Error("different error than axios");
@@ -89,14 +94,11 @@ const Log = () => {
         className="text-red-500"
         onClick={() => (showLog.value = !showLog.value)}
       >
-        Sign In
+        Sign Up
       </button>
-      {alert.value && (
-        <AlertOfNavBar message={alert.value.message} type={alert.value.type} />
-      )}
       <div
         className={`${
-          showLog.value ? "fixed" : "absolute"
+          showLog.value ? "fixed" : "absolute hidden"
         }  top-1/2 left-1/2 h-96 w-96  translate-x-[-50%] translate-y-[-50%] transition-all duration-300  `}
       >
         <div

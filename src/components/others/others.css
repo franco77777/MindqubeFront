@@ -1,0 +1,25 @@
+.alert__border--left{
+    border-left: 9px solid;
+    
+  }
+.alert__animation{
+    right: 0;
+    transform: translate(24rem,40vh);
+    animation: alert-to-left 0.3s ease-in-out forwards,  
+               alert-up 2s ease-in-out forwards 2s;
+     
+   }
+ 
+   @keyframes alert-to-left {
+     to{
+       transform: translate(-4px,40vh);
+       }
+     }
+ 
+     @keyframes alert-up {
+      to {
+       display: none;
+           opacity: 0;
+       transform: translate(-4px,10vh)};
+        
+       }

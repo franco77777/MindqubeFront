@@ -21,10 +21,13 @@ const Sidebar = () => {
           expandedDelay.value = false;
         }, 300);
   }, [expanded]);
+  console.log("render sidebar");
+
   return (
+    //ml-[10px]
     <>
       <aside
-        className={`ml-[10px] relative bg-yellow-600  ease-in-out transition-all duration-300 
+        className={` relative bg-yellow-600  ease-in-out transition-all duration-300 
      
        `}
       >

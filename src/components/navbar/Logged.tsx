@@ -1,9 +1,29 @@
-import { useAppSelector } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import profile from "../../assets/profile.png";
-import { logOut } from "../../utils/firebaseConfig";
+import { googleLogout } from "../../utils/firebaseConfig";
+import { useLocalStorage } from "react-use";
+import { setUser } from "../../redux/slices/currentUserSlice";
+import { setAlert } from "../../redux/slices/utils";
 
 const Logged = () => {
   const userLogged = useAppSelector((state) => state.user.googleAccount);
+  const alertObserver = useAppSelector((state) => state.utils.alertHandler);
+  const dispatch = useAppDispatch();
+  const [token, setToken, removeToken] = useLocalStorage("token");
+
+  const test = () => {
+    if (alertObserver) {
+      dispatch(setAlert(null));
+    } else {
+      dispatch(setAlert({ type: "Error", message: "" }));
+    }
+    console.log("soy alertobervable", alertObserver);
+  };
+  const removeUserLogged = () => {
+    removeToken();
+    googleLogout();
+    dispatch(setUser(null));
+  };
 
   return (
     <>
@@ -20,10 +40,12 @@ const Logged = () => {
            duration-300 none"
         >
           <li className="   cursor-default ">{userLogged?.email}</li>
-          <li onClick={logOut} className=" ">
+          <li onClick={removeUserLogged} className=" ">
             Log Out
           </li>
-          <li className="   ">tesing3</li>
+          <li className=" cursor-pointer  " onClick={test}>
+            tesing3
+          </li>
         </ul>
       </div>
     </>

@@ -11,31 +11,62 @@ const PageTest3 = lazy(() => import("./pages/PageTest3"));
 // import PageTest2 from "./pages/PageTest2.js";
 // import PageTest from "./pages/PageTest.js";
 // import PageTest3 from "./pages/PageTest3.js";
-import { useAppSelector } from "./utils/hooks";
+import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
-import { lazy, Suspense } from "preact/compat";
+import { lazy, Suspense, useEffect } from "preact/compat";
 import Sidebar from "./components/sidebar/SideBar";
 import Alert from "./components/others/Alert";
+import axios from "axios";
+import { setAlert } from "./redux/slices/utils";
+import { setUser } from "./redux/slices/currentUserSlice";
+import { UserDatabaseResponse } from "./types/userType";
 
 export function App() {
   const googleAccount = useAppSelector((state) => state.user.googleAccount);
+  const dispatch = useAppDispatch();
   console.log("render app", googleAccount);
 
-  // useEffectOnce(() => {
-  //   const verifyToken = async () => {
-  //     console.log("soy token", token);
-  //     try {
-  //       if (token) {
-  //         const response = await axios(
-  //           `http://localhost:8080/user/auth-token`,
-  //           { params: { token: token } }
-  //         );
-  //         console.log(response.data);
-  //       }
-  //       verifyToken();
-  //     } catch (error) {}
-  //   };
-  // });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const verifyToken = async () => {
+          const response: UserDatabaseResponse = (
+            await axios(`http://localhost:8080/user/auth-token`, {
+              params: { token: token },
+            })
+          ).data;
+          if (response) {
+            console.log("logged whit token", response);
+
+            dispatch(
+              setAlert({
+                message: `Welcome ${response}`,
+                type: "Success",
+              })
+            );
+            dispatch(setUser(response));
+          }
+        };
+        verifyToken();
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          dispatch(
+            setAlert({
+              message: error.response
+                ? error.response.data.message
+                : error.message,
+              type: "Error",
+            })
+          );
+          throw error;
+        } else {
+          throw new Error("different error than axios");
+        }
+      }
+    }
+  }, []);
   return (
     <>
       <NavBar />

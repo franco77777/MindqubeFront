@@ -50,7 +50,7 @@ export const Alert = () => {
           }}
           //translate-x-[calc(50vw_+_12rem)]
           class={`alert__animation alert__border--left flex rounded-md  p-4 
-    mb-4 text-sm text-white absolute `}
+    mb-4 text-sm text-white fixed z-50`}
           role="alert"
         >
           <div className="min-w-[22rem] flex justify-start items-center gap-1">

@@ -67,14 +67,15 @@
   }
 
   .navbar__modal--background-desanimation{
-    animation:background-decrease 300ms  forwards
+    animation:background-decrease 300ms  forwards;
+    border-radius: 10px;
   }
 
   
 
  @keyframes background-decrease{
     0% {
-     
+       
       transform:translate(-50%,-50%) scale(25);
     }
     
@@ -86,7 +87,6 @@
   }
  
   
- 
   
 
   

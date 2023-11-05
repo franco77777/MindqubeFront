@@ -42,21 +42,23 @@
   
   
   .navBar__alert--animation{
-    animation-timing-function: ease-in-out;
-    animation: alert-to-left 3s ease-in-out  forwards,
-    alert-up 3s ease-in-out forwards 3s ;
+   right: 0;
+   transform: translate(24rem,50vh);
+   animation: alert-to-left 0.3s ease-in-out forwards,  
+              alert-up 2s ease-in-out forwards 2s;
+    
   }
 
   @keyframes alert-to-left {
     to{
-      transform: translateX(calc(50vw - 13rem));
+      transform: translate(0rem,50vh);
       }
     }
 
     @keyframes alert-up {
-     
-       to{
-        
-        transform: translate(calc(50vw - 13rem),-15rem);
-       } 
+     to {
+      display: none;
+          opacity: 0;
+      transform: translate(0rem,10rem)};
+       
       }

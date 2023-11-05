@@ -1,12 +1,15 @@
-import { useEffectOnce } from "react-use";
-import { useAppSelector } from "../../utils/hooks";
+import { useEffectOnce, useLocalStorage } from "react-use";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 import { X } from "lucide-react";
 import { useSignal } from "@preact/signals";
 import React from "react";
 import GoogleButton from "./GoogleButtom";
-import AlertOfNavBar, { InvalidEmail } from "./AlertOfNavBar";
-import axios, { AxiosError } from "axios";
+import AlertOfNavBar from "./AlertOfNavBar";
+import axios from "axios";
+import { Alert } from "../../types/othersType";
+import { UserDatabaseResponse } from "../../types/userType";
+import { setUser } from "../../redux/slices/currentUserSlice";
 
 type Props = {
   email: string;
@@ -17,10 +20,12 @@ const Log = () => {
   const currentUser = useAppSelector((state) => state.user.googleAccount);
   const showLog = useSignal<boolean>(false);
   const userData = useSignal<Props>({ email: "", password: "" });
-  const messageAlert = useSignal<string>("");
+  const alert = useSignal<Alert | null>(null);
+  const dispatch = useAppDispatch();
   const regular = new RegExp(
     "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"
   );
+  const [token, setToken, removeToken] = useLocalStorage("token");
   const disableButtomSubmit = useSignal<boolean>(true);
   const handleUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
     userData.value = {
@@ -28,8 +33,6 @@ const Log = () => {
       [e.currentTarget.name]: e.currentTarget.value,
     };
     const result = regular.test(userData.value.email);
-    console.log("soy result", result);
-    console.log("soy password", userData.value.password);
 
     result && userData.value.password
       ? (disableButtomSubmit.value = false)
@@ -40,20 +43,30 @@ const Log = () => {
 
   const registerData = async () => {
     try {
-      const result = await axios.post(
-        "http://localhost:8080/user/sign-in",
-        userData.value
-      );
+      const result: UserDatabaseResponse = (
+        await axios.post("http://localhost:8080/user/sign-in", userData.value)
+      ).data;
+      if (result) {
+        setToken(result.token);
+        dispatch(setUser(result));
+        showLog.value = !showLog.value;
+        alert.value = { message: `Welcome ${result.email}`, type: "Success" };
+      }
+      setTimeout(() => {
+        alert.value = null;
+      }, 3500);
+      console.log(result);
     } catch (error) {
-      // const err = error as AxiosError;
-      // console.log(err.response?.data);
       if (axios.isAxiosError(error)) {
-        console.log("i'm the error", error.response?.data.message);
-
+        alert.value = {
+          message: error.response ? error.response.data.message : error.message,
+          type: "Error",
+        };
+        setTimeout(() => {
+          alert.value = null;
+        }, 3500);
         throw error;
       } else {
-        // do something else
-        // or creating a new error
         throw new Error("different error than axios");
       }
     }
@@ -68,6 +81,7 @@ const Log = () => {
     document.addEventListener("keydown", handleEscapeKey);
     return () => document.removeEventListener("keydown", handleEscapeKey);
   });
+  console.log("render sigin");
 
   return (
     <>
@@ -77,6 +91,9 @@ const Log = () => {
       >
         Sign In
       </button>
+      {alert.value && (
+        <AlertOfNavBar message={alert.value.message} type={alert.value.type} />
+      )}
       <div
         className={`${
           showLog.value ? "fixed" : "absolute"
@@ -150,9 +167,7 @@ const Log = () => {
             >
               Crear Cuenta
             </button>
-            {showLog.value && (
-              <AlertOfNavBar message={"conflict here"} type="Error" />
-            )}
+
             <GoogleButton />
           </article>
         </div>

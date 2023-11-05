@@ -11,6 +11,17 @@ export interface User {
     accountNonLocked?:      boolean;
 }
 
+export interface UserDatabaseResponse {
+    id:    number;
+    email: string;
+    token: string;
+    role:  Role;
+}
+
+export interface RoleDatabaseResponse {
+    role: string;
+}
+
 export interface Authority {
     authority: string;
 }

@@ -1,11 +1,13 @@
 import { useSignal } from "@preact/signals";
-import { XCircle } from "lucide-react";
+import {
+  AlertCircle,
+  AlertTriangle,
+  CheckCheck,
+  Info,
+  XCircle,
+} from "lucide-react";
 import "./navBar.css";
-
-type Alert = {
-  message: string;
-  type: "Error" | "Success" | "Info" | "Warning";
-};
+import { Alert } from "../../types/othersType";
 
 export const AlertOfNavBar = ({ message, type }: Alert) => {
   const colorBackground = useSignal<string>("");
@@ -36,13 +38,17 @@ export const AlertOfNavBar = ({ message, type }: Alert) => {
           color: colorType.value,
         }}
         //translate-x-[calc(50vw_+_12rem)]
-        class={`navBar__alert--animation navBar__alert--border-left flex translate-x-[calc(50vw_+_12rem)] rounded-md  p-4 
+        class={`navBar__alert--animation navBar__alert--border-left flex rounded-md  p-4 
         mb-4 text-sm text-white absolute `}
         role="alert"
       >
         <div className="min-w-[22rem] flex justify-start items-center gap-1">
-          {/* <XCircle size={35} color={"#cc8924"} className="mr-1" /> */}
           {type === "Error" && <XCircle size={35} className={` mr-1`} />}
+          {type === "Success" && <CheckCheck size={35} className={` mr-1`} />}
+          {type === "Warning" && (
+            <AlertTriangle size={35} className={` mr-1`} />
+          )}
+          {type === "Info" && <Info size={35} className={` mr-1`} />}
           <span class="font-medium">{type}</span> {message}
         </div>
       </div>
